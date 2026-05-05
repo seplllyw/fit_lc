@@ -1,5 +1,5 @@
 import { Component, ReactNode } from 'react';
-import { BrowserRouter, Routes, Route, Navigate, Outlet } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, Outlet, useLocation } from 'react-router-dom';
 import { useAuthStore } from './stores/authStore';
 import BottomTabLayout from './layouts/BottomTabLayout';
 import SidebarLayout from './layouts/SidebarLayout';
@@ -60,13 +60,22 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
 
 function useAuth() {
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
-  return { isAuthenticated };
+  const hasOnboarded = useAuthStore((s) => s.hasOnboarded);
+  return { isAuthenticated, hasOnboarded };
 }
 
 // 用户端布局（Bottom Tab）
 function UserLayout() {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, hasOnboarded } = useAuth();
+  const location = useLocation();
+
   if (!isAuthenticated) return <Navigate to="/login" />;
+
+  // 未完成 onboarding 且不在 onboarding 页面，强制跳转
+  if (!hasOnboarded && location.pathname !== '/onboarding') {
+    return <Navigate to="/onboarding" />;
+  }
+
   return (
     <div className="min-h-screen flex flex-col">
       <AppTipBanner />
