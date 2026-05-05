@@ -117,9 +117,9 @@ export interface UserProfile {
   experience: 'beginner' | 'intermediate' | 'advanced';
   equipment: string;
   conditions?: string;
-  body_weight: number;
-  body_fat?: number;
-  height: number;
+  body_weight?: number;
+  bodyFat?: number;
+  height?: number;
   duration_weeks: number;
 }
 
