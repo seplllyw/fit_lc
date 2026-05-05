@@ -111,16 +111,20 @@ export interface Plan {
 }
 
 export interface UserProfile {
+  id?: number;
+  userId?: number;
+  nickname?: string;
   name?: string;
-  goal: 'bulk' | 'cut' | 'maintain';
-  frequency: number;
-  experience: 'beginner' | 'intermediate' | 'advanced';
-  equipment: string;
-  conditions?: string;
-  body_weight?: number;
-  bodyFat?: number;
+  avatar?: string;
   height?: number;
-  duration_weeks: number;
+  body_weight?: number;
+  body_fat?: number;
+  experience?: 'beginner' | 'intermediate' | 'advanced';
+  goal?: 'bulk' | 'cut' | 'maintain';
+  frequency?: number;
+  equipment?: string;
+  conditions?: string;
+  duration_weeks?: number;
 }
 
 export interface ExecutionInput {
