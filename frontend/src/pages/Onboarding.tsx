@@ -20,9 +20,9 @@ const goalOptions = [
 export default function Onboarding() {
   const navigate = useNavigate();
   const setHasOnboarded = useAuthStore((s) => s.setHasOnboarded);
-  const [height, setHeight] = useState('');
-  const [weight, setWeight] = useState('');
-  const [bodyFat, setBodyFat] = useState('');
+  const [height, setHeight] = useState('170');
+  const [weight, setWeight] = useState('65');
+  const [bodyFat, setBodyFat] = useState('18');
   const [experience, setExperience] = useState('beginner');
   const [goal, setGoal] = useState('bulk');
   const [loading, setLoading] = useState(false);
@@ -33,10 +33,10 @@ export default function Onboarding() {
     try {
       await userApi.updateProfile({
         height: parseFloat(height),
-        weight: parseFloat(weight),
-        bodyFat: bodyFat ? parseFloat(bodyFat) : undefined,
-        experience,
-        goal,
+        body_weight: parseFloat(weight),
+        body_fat: bodyFat ? parseFloat(bodyFat) : undefined,
+        experience: experience as 'beginner' | 'intermediate' | 'advanced',
+        goal: goal as 'bulk' | 'cut' | 'maintain',
       });
       await userApi.setOnboarded();
       setHasOnboarded(true);

@@ -1,12 +1,7 @@
 import client from './client';
+import type { UserProfile } from '../types';
 
-export interface UserProfile {
-  id?: number;
-  userId: number;
-  nickname?: string;
-  avatar?: string;
-  height?: number;
-}
+export type { UserProfile };
 
 export interface BodyMetric {
   id: number;
