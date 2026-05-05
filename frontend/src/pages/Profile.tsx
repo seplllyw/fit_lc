@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useRecordsStore } from '../stores/recordsStore';
 import { useAchievementStore } from '../stores/achievementStore';
+import { userApi } from '../api/user';
 import Card from '../components/ui/Card';
 import StatCard from '../components/dashboard/StatCard';
 
@@ -9,11 +10,16 @@ export default function Profile() {
   const { recentWorkouts, fetchWorkouts } = useRecordsStore();
   const { stats: achievementStats } = useAchievementStore();
   const [loading, setLoading] = useState(true);
+  const [profile, setProfile] = useState<any>(null);
 
   useEffect(() => {
     fetchWorkouts();
     setLoading(false);
   }, [fetchWorkouts]);
+
+  useEffect(() => {
+    userApi.getProfile().then(({ profile }) => setProfile(profile)).catch(console.error);
+  }, []);
 
   const totalWorkouts = achievementStats['total_workouts']?.value || 0;
   const streakDays = achievementStats['streak_days']?.value || 0;
@@ -27,6 +33,42 @@ export default function Profile() {
   return (
     <div className="px-6 py-4">
       <h1 className="font-heading text-3xl font-bold mb-6">我的</h1>
+
+      {/* 个人信息卡片 */}
+      <Card className="mb-6">
+        <div className="flex items-center justify-between mb-2">
+          <h2 className="font-heading text-lg font-semibold text-text-primary">基本信息</h2>
+          <button className="text-accent-orange text-sm">编辑</button>
+        </div>
+        <div className="grid grid-cols-3 gap-4 text-center">
+          <div>
+            <div className="text-2xl font-bold text-accent-orange">{profile?.height || '—'}</div>
+            <div className="text-text-secondary text-sm">身高(cm)</div>
+          </div>
+          <div>
+            <div className="text-2xl font-bold text-accent-orange">{profile?.weight || '—'}</div>
+            <div className="text-text-secondary text-sm">体重(kg)</div>
+          </div>
+          <div>
+            <div className="text-2xl font-bold text-accent-orange">{profile?.bodyFat || '—'}</div>
+            <div className="text-text-secondary text-sm">体脂(%)</div>
+          </div>
+        </div>
+        <div className="mt-4 pt-4 border-t border-border grid grid-cols-2 gap-4 text-center text-sm">
+          <div>
+            <span className="text-text-secondary">训练经验: </span>
+            <span className="text-text-primary">
+              {profile?.experience === 'beginner' ? '初学' : profile?.experience === 'intermediate' ? '中级' : '高级'}
+            </span>
+          </div>
+          <div>
+            <span className="text-text-secondary">目标: </span>
+            <span className="text-text-primary">
+              {profile?.goal === 'bulk' ? '增肌' : profile?.goal === 'cut' ? '减脂' : '维持'}
+            </span>
+          </div>
+        </div>
+      </Card>
 
       {/* 快速入口 */}
       <div className="grid grid-cols-3 gap-4 mb-6">
