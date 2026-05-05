@@ -8,6 +8,7 @@ import ToastContainer from './components/Toast';
 import AppTipBanner from './components/AppTipBanner';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import Onboarding from './pages/Onboarding';
 import Chat from './pages/Chat';
 import History from './pages/History';
 import Trends from './pages/Trends';
@@ -91,6 +92,7 @@ function App() {
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/onboarding" element={<Onboarding />} />
 
             {/* 用户端路由 - Bottom Tab 布局 */}
             <Route element={<UserLayout />}>
