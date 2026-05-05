@@ -6,15 +6,15 @@ const router = Router();
 
 // Validation schemas
 const userProfileSchema = z.object({
-  name: z.string().min(1, '计划名称不能为空'),
+  name: z.string().min(1, '计划名称不能为空').optional(),
   goal: z.enum(['bulk', 'cut', 'maintain']),
   frequency: z.number().min(1).max(7, '频率应为1-7次/周'),
   experience: z.enum(['beginner', 'intermediate', 'advanced']),
-  equipment: z.string().min(1),
+  equipment: z.string().min(1, '请填写可用器械'),
   conditions: z.string().optional(),
-  body_weight: z.number().positive().optional(),
-  body_fat: z.number().positive().optional(),
-  height: z.number().positive().optional(),
+  body_weight: z.number().positive().optional().nullable(),
+  body_fat: z.number().positive().optional().nullable(),
+  height: z.number().positive().optional().nullable(),
   duration_weeks: z.number().min(1).max(52)
 });
 
@@ -41,7 +41,10 @@ router.get('/', async (req: Request, res: Response) => {
 // Get plan detail
 router.get('/:id', async (req: Request, res: Response) => {
   try {
-    const { id } = req.params;
+    const id = parseInt(req.params.id, 10);
+    if (isNaN(id)) {
+      return res.status(400).json({ error: 'Invalid plan ID' });
+    }
     const userId = req.user!.id;
 
     const plan = await planService.getPlan(id, userId);

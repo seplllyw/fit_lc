@@ -1,6 +1,7 @@
 // @ts-nocheck
 import { planRepository } from '../repositories/planRepository';
 import prisma from '../lib/prisma';
+import { Decimal } from '@prisma/client/runtime/client';
 
 export const planService = {
   // Create plan with exercises
@@ -21,18 +22,19 @@ export const planService = {
 
     // Use transaction to ensure atomicity: create plan + add exercises
     const planId = await prisma.$transaction(async (tx) => {
+      const planName = planData.name || `健身计划-${Date.now()}`;
       const plan = await tx.workoutPlan.create({
         data: {
           userId,
-          name: planData.name,
+          name: planName,
           goal: planData.goal,
           frequency: planData.frequency,
           experience: planData.experience,
           equipment: planData.equipment,
           conditions: planData.conditions ?? null,
-          bodyWeight: planData.body_weight ? new (require('@prisma/client/runtime/client').Decimal)(planData.body_weight.toString()) : null,
-          bodyFat: planData.body_fat ? new (require('@prisma/client/runtime/client').Decimal)(planData.body_fat.toString()) : null,
-          height: planData.height ? new (require('@prisma/client/runtime/client').Decimal)(planData.height.toString()) : null,
+          bodyWeight: planData.body_weight ? new Decimal(planData.body_weight.toString()) : null,
+          bodyFat: planData.body_fat ? new Decimal(planData.body_fat.toString()) : null,
+          height: planData.height ? new Decimal(planData.height.toString()) : null,
           durationWeeks: planData.duration_weeks,
           status: 'draft'
         }

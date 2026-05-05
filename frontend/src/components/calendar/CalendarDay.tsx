@@ -1,7 +1,6 @@
-import React from 'react';
-
 interface CalendarDayProps {
   day: number;
+  dateStr: string;
   hasRecord: boolean;
   isToday: boolean;
   isSelected: boolean;
@@ -10,6 +9,7 @@ interface CalendarDayProps {
 
 export default function CalendarDay({
   day,
+  dateStr: _dateStr,
   hasRecord,
   isToday,
   isSelected,

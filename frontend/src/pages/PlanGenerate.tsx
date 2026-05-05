@@ -14,7 +14,7 @@ export default function PlanGenerate() {
     try {
       const result = await generatePlan(data, undefined);
       addToast('计划已生成', 'success');
-      navigate(`/plans/${result.plan_id}`);
+      navigate(`/plans/${result.planId}`);
     } catch {
       addToast('生成失败，请重试', 'error');
     }

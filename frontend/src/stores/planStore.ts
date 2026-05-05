@@ -10,7 +10,7 @@ interface PlanState {
   analysis: ExecutionStats | null;
   fetchPlans: () => Promise<void>;
   fetchPlan: (id: number) => Promise<void>;
-  generatePlan: (userProfile: UserProfile, exercises: Plan['exercises']) => Promise<{ plan_id: number; message: string }>;
+  generatePlan: (userProfile: UserProfile, exercises: Plan['exercises']) => Promise<{ planId: number; message: string }>;
   updatePlan: (id: number, updates: Partial<Plan>) => Promise<void>;
   deletePlan: (id: number) => Promise<void>;
   activatePlan: (id: number) => Promise<void>;

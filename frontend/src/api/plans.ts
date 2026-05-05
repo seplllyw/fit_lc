@@ -12,8 +12,8 @@ export const plansApi = {
     return data;
   },
 
-  async generatePlan(userProfile: UserProfile, exercises: Plan['exercises']): Promise<{ plan_id: number; message: string }> {
-    const { data } = await client.post<{ plan_id: number; message: string }>('/plans/generate', {
+  async generatePlan(userProfile: UserProfile, exercises: Plan['exercises']): Promise<{ planId: number; message: string }> {
+    const { data } = await client.post<{ planId: number; message: string }>('/plans/generate', {
       userProfile,
       exercises,
     });

@@ -71,7 +71,7 @@ export default function Calendar() {
   };
 
   const toggleDate = (date: string) => {
-    setSelectedDate((prev) => (prev === date ? null : date));
+    setSelectedDate((prev) => (prev === date ? '' : date));
   };
 
   return (

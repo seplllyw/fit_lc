@@ -1,4 +1,3 @@
-import React from 'react';
 import type { Workout, Measurement } from '../../types';
 
 interface CalendarDetailProps {
