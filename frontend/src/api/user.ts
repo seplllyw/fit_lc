@@ -79,6 +79,10 @@ export const userApi = {
     const { data } = await client.get('/users/me/measurements/history', { params: { bodyPart, page, limit } });
     return data;
   },
+
+  async setOnboarded(): Promise<void> {
+    await client.patch('/users/me/profile/onboarded', { hasOnboarded: true });
+  },
 };
 
 function fileToBase64(file: File): Promise<string> {
