@@ -35,14 +35,14 @@ export interface MeasurementHistory {
 }
 
 export const userApi = {
-  async getProfile(): Promise<UserProfile | null> {
+  async getProfile(): Promise<{ profile: any }> {
     const { data } = await client.get('/users/me/profile');
-    return data;
+    return { profile: data };
   },
 
-  async updateProfile(data: Partial<UserProfile>): Promise<UserProfile> {
-    const { data: result } = await client.put('/users/me/profile', data);
-    return result;
+  async updateProfile(profile: Partial<UserProfile>): Promise<{ profile: any }> {
+    const { data } = await client.put('/users/me/profile', profile);
+    return { profile: data };
   },
 
   async changePassword(oldPassword: string, newPassword: string): Promise<void> {
